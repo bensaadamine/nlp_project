@@ -1,5 +1,22 @@
 import pdfplumber
 from pathlib import Path
+from preprocessing import preprocess_text
+import unicodedata
+import re
+
+
+def clean_pdf_text(text: str) -> str:
+    """Nettoie le texte extrait du PDF en normalisant les accents mal positionnés"""
+    # Normalise d'abord le texte
+    text = unicodedata.normalize("NFD", text)
+    
+    # Supprime les accents orphelins (accents sans caractère avant)
+    text = re.sub(r"[\´`¨^~]", "", text)
+    
+    # Recompose les caractères
+    text = unicodedata.normalize("NFC", text)
+    
+    return text
 
 
 def extract_text_from_pdf(pdf_path: Path) -> str:
@@ -10,6 +27,8 @@ def extract_text_from_pdf(pdf_path: Path) -> str:
             text = page.extract_text()
 
             if text:
+                # Nettoie le texte extrait
+                text = clean_pdf_text(text)
                 extracted_text.append(text)
             else:
                 print(f"[WARNING] No text found on page {page_number}")
@@ -23,4 +42,5 @@ if __name__ == "__main__":
     text = extract_text_from_pdf(pdf_file)
 
     print("===== EXTRACTED TEXT =====")
-    print(text[:1500])  # afficher seulement le début
+    clean_text = preprocess_text(text)
+    print(clean_text[:1500])  

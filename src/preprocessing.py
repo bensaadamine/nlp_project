@@ -5,7 +5,7 @@ from nltk.tokenize import word_tokenize
 import unicodedata
 
 
-STOPWORDS = set(stopwords.words("french"))
+STOPWORDS = set(stopwords.words("english"))
 
 def remove_accents(text: str) -> str:
     text = unicodedata.normalize("NFD", text)
@@ -29,8 +29,8 @@ def preprocess_text(text: str) -> str:
 
 if __name__ == "__main__":
     sample_text = """
-    premièrement, c'est un exemple de texte en français avec des accents.
-    Deuxièmement, il contient des mots courants qui devraient être supprimés.
+    first, this is an example of text in English without accents.
+    second, it contains common words that should be removed.
     """
 
     print("Original text:")

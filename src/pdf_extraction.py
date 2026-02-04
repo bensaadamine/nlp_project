@@ -6,16 +6,9 @@ import re
 
 
 def clean_pdf_text(text: str) -> str:
-    """Nettoie le texte extrait du PDF en normalisant les accents mal positionnés"""
-    # Normalise d'abord le texte
     text = unicodedata.normalize("NFD", text)
-    
-    # Supprime les accents orphelins (accents sans caractère avant)
     text = re.sub(r"[\´`¨^~]", "", text)
-    
-    # Recompose les caractères
     text = unicodedata.normalize("NFC", text)
-    
     return text
 
 
@@ -27,7 +20,6 @@ def extract_text_from_pdf(pdf_path: Path) -> str:
             text = page.extract_text()
 
             if text:
-                # Nettoie le texte extrait
                 text = clean_pdf_text(text)
                 extracted_text.append(text)
             else:

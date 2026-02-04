@@ -1,0 +1,14 @@
+We are looking for a Python Developer with strong experience in data analysis
+and machine learning.
+
+Required skills:
+- Python
+- Pandas, NumPy
+- Data analysis
+- Machine Learning basics
+- SQL
+
+Nice to have:
+- Scikit-learn
+- Data visualization
+- Git
